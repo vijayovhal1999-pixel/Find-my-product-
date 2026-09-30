@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Find My Product</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+header {
+    background: #2563eb;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 8px;
+}
+
+.container {
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#preview {
+    display: none;
+    width: 180px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+.shop {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 12px;
+}
+
+.shop-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.shop-location {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.shop button {
+    background: #16a34a;
+}
+
+#alert {
+    padding: 15px;
+    background: #eff6ff;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🔎 Find My Product</h1>
+    <p>Find which nearby shop has your product</p>
+</header>
+
+<div class="container">
+
+    <!-- PRODUCT SEARCH -->
+
+    <div class="card">
+
+        <h2>🛍️ Search Product</h2>
+
+        <input
+            type="text"
+            id="productName"
+            placeholder="Enter product name"
+        >
+
+        <input
+            type="file"
+            id="productPhoto"
+            accept="image/*"
+        >
+
+        <img id="preview">
+
+        <button onclick="searchProduct()">
+            Find Nearby Shops
+        </button>
+
+        <p id="searchMessage"></p>
+
+    </div>
+
+
+    <!-- SHOPS -->
+
+    <div class="card">
+
+        <h2>🏪 Nearby Shops</h2>
+
+        <div id="shops">
+
+            <div class="shop">
+                <div class="shop-name">Shop 1</div>
+                <div class="shop-location">
+                    Main Market
+                </div>
+
+                <button onclick="askShop('Shop 1')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 2</div>
+                <div class="shop-location">
+                    Shivaji Chowk
+                </div>
+
+                <button onclick="askShop('Shop 2')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 3</div>
+                <div class="shop-location">
+                    Bus Stand Road
+                </div>
+
+                <button onclick="askShop('Shop 3')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 4</div>
+                <div class="shop-location">
+                    Station Road
+                </div>
+
+                <button onclick="askShop('Shop 4')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 5</div>
+                <div class="shop-location">
+                    Market Area
+                </div>
+
+                <button onclick="askShop('Shop 5')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 6</div>
+                <div class="shop-location">
+                    Gandhi Chowk
+                </div>
+
+                <button onclick="askShop('Shop 6')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 7</div>
+                <div class="shop-location">
+                    College Road
+                </div>
+
+                <button onclick="askShop('Shop 7')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 8</div>
+                <div class="shop-location">
+                    MIDC Road
+                </div>
+
+                <button onclick="askShop('Shop 8')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 9</div>
+                <div class="shop-location">
+                    Nehru Chowk
+                </div>
+
+                <button onclick="askShop('Shop 9')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 10</div>
+                <div class="shop-location">
+                    Old Market
+                </div>
+
+                <button onclick="askShop('Shop 10')">
+                    Ask Availability
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ALERT -->
+
+    <div class="card">
+
+        <h2>🔔 My Alerts</h2>
+
+        <div id="alert">
+            No shop has responded yet.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function searchProduct() {
+
+    let product =
+        document.getElementById("productName").value;
+
+    if (product === "") {
+
+        alert("Please enter product name.");
+
+        return;
+    }
+
+    document.getElementById("searchMessage").innerHTML =
+        "🔎 Searching shops for <b>" +
+        product +
+        "</b>";
+
+}
+
+
+function askShop(shopName) {
+
+    let product =
+        document.getElementById("productName").value;
+
+    if (product === "") {
+
+        alert("First enter product name.");
+
+        return;
+    }
+
+    document.getElementById("alert").innerHTML =
+        "⏳ Availability request sent to <b>" +
+        shopName +
+        "</b> for <b>" +
+        product +
+        "</b>.<br><br>" +
+
+        "Demo mode: When the shopkeeper approves, " +
+        "an alert will appear here.";
+
+}
+
+
+document.getElementById("productPhoto")
+.addEventListener("change", function(event) {
+
+    let file = event.target.files[0];
+
+    if (file) {
+
+        let image =
+            document.getElementById("preview");
+
+        image.src =
+            URL.createObjectURL(file);
+
+        image.style.display = "block";
+    }
+
+});
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Find My Product</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+header {
+    background: #2563eb;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 8px;
+}
+
+.container {
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#preview {
+    display: none;
+    width: 180px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+.shop {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 12px;
+}
+
+.shop-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.shop-location {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.shop button {
+    background: #16a34a;
+}
+
+#alert {
+    padding: 15px;
+    background: #eff6ff;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🔎 Find My Product</h1>
+    <p>Find which nearby shop has your product</p>
+</header>
+
+<div class="container">
+
+    <!-- PRODUCT SEARCH -->
+
+    <div class="card">
+
+        <h2>🛍️ Search Product</h2>
+
+        <input
+            type="text"
+            id="productName"
+            placeholder="Enter product name"
+        >
+
+        <input
+            type="file"
+            id="productPhoto"
+            accept="image/*"
+        >
+
+        <img id="preview">
+
+        <button onclick="searchProduct()">
+            Find Nearby Shops
+        </button>
+
+        <p id="searchMessage"></p>
+
+    </div>
+
+
+    <!-- SHOPS -->
+
+    <div class="card">
+
+        <h2>🏪 Nearby Shops</h2>
+
+        <div id="shops">
+
+            <div class="shop">
+                <div class="shop-name">Shop 1</div>
+                <div class="shop-location">
+                    Main Market
+                </div>
+
+                <button onclick="askShop('Shop 1')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 2</div>
+                <div class="shop-location">
+                    Shivaji Chowk
+                </div>
+
+                <button onclick="askShop('Shop 2')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 3</div>
+                <div class="shop-location">
+                    Bus Stand Road
+                </div>
+
+                <button onclick="askShop('Shop 3')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 4</div>
+                <div class="shop-location">
+                    Station Road
+                </div>
+
+                <button onclick="askShop('Shop 4')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 5</div>
+                <div class="shop-location">
+                    Market Area
+                </div>
+
+                <button onclick="askShop('Shop 5')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 6</div>
+                <div class="shop-location">
+                    Gandhi Chowk
+                </div>
+
+                <button onclick="askShop('Shop 6')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 7</div>
+                <div class="shop-location">
+                    College Road
+                </div>
+
+                <button onclick="askShop('Shop 7')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 8</div>
+                <div class="shop-location">
+                    MIDC Road
+                </div>
+
+                <button onclick="askShop('Shop 8')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 9</div>
+                <div class="shop-location">
+                    Nehru Chowk
+                </div>
+
+                <button onclick="askShop('Shop 9')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 10</div>
+                <div class="shop-location">
+                    Old Market
+                </div>
+
+                <button onclick="askShop('Shop 10')">
+                    Ask Availability
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ALERT -->
+
+    <div class="card">
+
+        <h2>🔔 My Alerts</h2>
+
+        <div id="alert">
+            No shop has responded yet.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function searchProduct() {
+
+    let product =
+        document.getElementById("productName").value;
+
+    if (product === "") {
+
+        alert("Please enter product name.");
+
+        return;
+    }
+
+    document.getElementById("searchMessage").innerHTML =
+        "🔎 Searching shops for <b>" +
+        product +
+        "</b>";
+
+}
+
+
+function askShop(shopName) {
+
+    let product =
+        document.getElementById("productName").value;
+
+    if (product === "") {
+
+        alert("First enter product name.");
+
+        return;
+    }
+
+    document.getElementById("alert").innerHTML =
+        "⏳ Availability request sent to <b>" +
+        shopName +
+        "</b> for <b>" +
+        product +
+        "</b>.<br><br>" +
+
+        "Demo mode: When the shopkeeper approves, " +
+        "an alert will appear here.";
+
+}
+
+
+document.getElementById("productPhoto")
+.addEventListener("change", function(event) {
+
+    let file = event.target.files[0];
+
+    if (file) {
+
+        let image =
+            document.getElementById("preview");
+
+        image.src =
+            URL.createObjectURL(file);
+
+        image.style.display = "block";
+    }
+
+});
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Find My Product</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+header {
+    background: #2563eb;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 8px;
+}
+
+.container {
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#preview {
+    display: none;
+    width: 180px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+.shop {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 12px;
+}
+
+.shop-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.shop-location {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.shop button {
+    background: #16a34a;
+}
+
+#alert {
+    padding: 15px;
+    background: #eff6ff;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🔎 Find My Product</h1>
+    <p>Find which nearby shop has your product</p>
+</header>
+
+<div class="container">
+
+    <!-- PRODUCT SEARCH -->
+
+    <div class="card">
+
+        <h2>🛍️ Search Product</h2>
+
+        <input
+            type="text"
+            id="productName"
+            placeholder="Enter product name"
+        >
+
+        <input
+            type="file"
+            id="productPhoto"
+            accept="image/*"
+        >
+
+        <img id="preview">
+
+        <button onclick="searchProduct()">
+            Find Nearby Shops
+        </button>
+
+        <p id="searchMessage"></p>
+
+    </div>
+
+
+    <!-- SHOPS -->
+
+    <div class="card">
+
+        <h2>🏪 Nearby Shops</h2>
+
+        <div id="shops">
+
+            <div class="shop">
+                <div class="shop-name">Shop 1</div>
+                <div class="shop-location">
+                    Main Market
+                </div>
+
+                <button onclick="askShop('Shop 1')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 2</div>
+                <div class="shop-location">
+                    Shivaji Chowk
+                </div>
+
+                <button onclick="askShop('Shop 2')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 3</div>
+                <div class="shop-location">
+                    Bus Stand Road
+                </div>
+
+                <button onclick="askShop('Shop 3')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 4</div>
+                <div class="shop-location">
+                    Station Road
+                </div>
+
+                <button onclick="askShop('Shop 4')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 5</div>
+                <div class="shop-location">
+                    Market Area
+                </div>
+
+                <button onclick="askShop('Shop 5')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 6</div>
+                <div class="shop-location">
+                    Gandhi Chowk
+                </div>
+
+                <button onclick="askShop('Shop 6')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 7</div>
+                <div class="shop-location">
+                    College Road
+                </div>
+
+                <button onclick="askShop('Shop 7')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 8</div>
+                <div class="shop-location">
+                    MIDC Road
+                </div>
+
+                <button onclick="askShop('Shop 8')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 9</div>
+                <div class="shop-location">
+                    Nehru Chowk
+                </div>
+
+                <button onclick="askShop('Shop 9')">
+                    Ask Availability
+                </button>
+            </div>
+
+
+            <div class="shop">
+                <div class="shop-name">Shop 10</div>
+                <div class="shop-location">
+                    Old Market
+                </div>
+
+                <button onclick="askShop('Shop 10')">
+                    Ask Availability
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ALERT -->
+
+    <div class="card">
+
+        <h2>🔔 My Alerts</h2>
+
+        <div id="alert">
+            No shop has responded yet.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function searchProduct() {
+
+    let product =
+        document.getElementById("productName").value;
+
+    if (product === "") {
+
+        alert("Please enter product name.");
+
+        return;
+    }
+
+    document.getElementById("searchMessage").innerHTML =
+        "🔎 Searching shops for <b>" +
+        product +
+        "</b>";
+
+}
+
+
+function askShop(shopName) {
+
+    let product =
+        document.getElementById("productName").value;
+
+    if (product === "") {
+
+        alert("First enter product name.");
+
+        return;
+    }
+
+    document.getElementById("alert").innerHTML =
+        "⏳ Availability request sent to <b>" +
+        shopName +
+        "</b> for <b>" +
+        product +
+        "</b>.<br><br>" +
+
+        "Demo mode: When the shopkeeper approves, " +
+        "an alert will appear here.";
+
+}
+
+
+document.getElementById("productPhoto")
+.addEventListener("change", function(event) {
+
+    let file = event.target.files[0];
+
+    if (file) {
+
+        let image =
+            document.getElementById("preview");
+
+        image.src =
+            URL.createObjectURL(file);
+
+        image.style.display = "block";
+    }
+
+});
+
+</script>
+
+</body>
+  </html>
